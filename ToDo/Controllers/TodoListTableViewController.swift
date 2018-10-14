@@ -50,9 +50,7 @@ class TodoListTableViewController: UITableViewController {
 
         // Configure the cell...
         let item = itemArray[indexPath.row]
-        
         cell.textLabel?.text = item.title
-        
         cell.accessoryType = item.done == true ? .checkmark : .none
 
         return cell
