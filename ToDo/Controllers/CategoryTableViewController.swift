@@ -21,25 +21,23 @@ class CategoryTableViewController: UITableViewController {
         loadCategories()
     }
 
-    // MARK: - Table view data source
+    // MARK: - TableView Datasource Methods
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         return categories?.count ?? 1
     }
 
-
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: "CategoryCell", for: indexPath)
 
-        // Configure the cell...
-        cell.textLabel?.text = categories?[indexPath.row].name ?? "No Categories Added  et"
+        cell.textLabel?.text = categories?[indexPath.row].name ?? "No Categories Added Yet"
         
         return cell
     }
     
-
-    // MARK: - Data manipulation methods
+    // MARK: - Data Manipulation Methods
     
     func save(category: Category) {
         do {
@@ -61,7 +59,7 @@ class CategoryTableViewController: UITableViewController {
     }
 
     
-    // MARK: - Table view delegate methods
+    // MARK: - TableView Delegate Methods
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 
@@ -69,6 +67,7 @@ class CategoryTableViewController: UITableViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
         let destinationVC = segue.destination as! TodoListTableViewController
         
         if let indexPath = tableView.indexPathForSelectedRow {
@@ -76,19 +75,15 @@ class CategoryTableViewController: UITableViewController {
         }
     }
     
-    // MARK: - Add new
+    // MARK: - Add New Categories
     
     @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
+        
         var textField = UITextField()
         
-        let alert = UIAlertController(title: "Add new category", message: "", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Add New Category", message: "", preferredStyle: .alert)
         
-        alert.addTextField { (alertTextField) in
-            alertTextField.placeholder = "Enter new category"
-            textField = alertTextField
-        }
-        
-        let action = UIAlertAction(title: "Add category", style: .default) { (action) in
+        let action = UIAlertAction(title: "Add", style: .default) { (action) in
             
             let newCategory = Category()
             newCategory.name = textField.text!
@@ -97,8 +92,13 @@ class CategoryTableViewController: UITableViewController {
         }
         
         alert.addAction(action)
-        present(alert, animated: true, completion: nil)
         
+        alert.addTextField { (field) in
+            textField = field
+            textField.placeholder = "Enter new category"
+        }
+        
+        present(alert, animated: true, completion: nil)
     }
 
 }
